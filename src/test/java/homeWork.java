@@ -8,7 +8,7 @@ public class homeWork {
         int percentage = percentageCredit(5);
         System.out.println("My credit percentage % is: " + percentage);
         int amount = finalAmount(50000, 5);
-        System.out.println("My final amount to pay is: " + amount);
+        System.out.println("My final amount to pay iss: " + amount);
 
         System.out.println("Amount of symbols in string is: " + counter);
         System.out.println("Amount of words in string is: " + countWord);
