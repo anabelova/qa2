@@ -6,20 +6,15 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 
 import java.util.List;
 
 public class tvNetTest {
     private WebDriver driver;
-    private WebDriverWait wait;
     private final By ARTICLE = By.xpath(".//article[@class='list-article']/a");
     private final By COMMENTS_BUTTON =  By.xpath(".//a[contains(@class, 'article-share__item--comments')]");
 
-    private void removeAds() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("document.querySelector('[id^=\"google_ads_iframe\"]').remove();");
-    }
 
     @BeforeEach
     public void beforeEach () {
@@ -36,9 +31,8 @@ public class tvNetTest {
 
     // from home page go to any article. from article page go to comments section
     @Test
-    public void test1() {
+    public void test1() throws InterruptedException {
         driver.findElement(ARTICLE).click();
-        removeAds();
         driver.findElement(COMMENTS_BUTTON).click();
     }
 
