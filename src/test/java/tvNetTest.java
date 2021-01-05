@@ -43,6 +43,7 @@ public class tvNetTest {
         WebElement targetElement = elements.get(4);
         targetElement.click();
     }
+    ///
 
     // ** perehodim na stjatju po konkretnomu zagalovku.
     @Test
