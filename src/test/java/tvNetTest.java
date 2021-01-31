@@ -36,7 +36,7 @@ public class tvNetTest {
         driver.findElement(COMMENTS_BUTTON).click();
     }
 
-    // * go to statja po schotu ispoljzuja spiski.
+    // * perehod s glavnoj stranici sdelatj ne na ljubuju statju a na opredeljonnuju statju (spiski)
     @Test
     public void test2() {
         List<WebElement> elements = driver.findElements(ARTICLE);
@@ -45,7 +45,7 @@ public class tvNetTest {
     }
     ///
 
-    // ** perehodim na stjatju po konkretnomu zagalovku.
+    // ** perehodim na stjatju po nazvaniju statji
     @Test
     public void test3_v1_cycle() {
         String ARTICLE_TEXT = "Pret vairākām";
@@ -67,8 +67,8 @@ public class tvNetTest {
     }
 
 
-        // *** perehodja po stranicam proverjajem chto zagalovki statji odinakovie
-        // **** vmeste s zagalovkami proverjatj kolichestvo komentatiev.
-        // ***** sootvetsvuet li cifra s kommentami. ispoljzovatj int vmesto string.
+        // *** perehodja po etim trjom stranicam sdelatj proverki, chto zagolovok na kazhdoj stranice praviljnij
+        // **** kolichestvo kommentariev odinakovoe na kazhdoj stranice
+        // ***** poschitatj realjnie komentarii i proveritj chto ih kolichestvo sovpadaet s tem chto na schetchikah. int
 
 }
