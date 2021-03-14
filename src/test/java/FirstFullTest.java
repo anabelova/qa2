@@ -73,8 +73,6 @@ public class FirstFullTest {
         //Check title
         Assertions.assertEquals(titleToCheck, driver.findElement(ARTICLE_PAGE_TITLE).getText(), "Incorrect title");
 
-        //Check comments count
-
 
     }
 }

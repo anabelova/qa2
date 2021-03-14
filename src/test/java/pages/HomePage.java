@@ -1,23 +1,81 @@
 package pages;
 
+import Helpers.CommentsHelper;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
+import java.util.HashMap;
+import java.util.List;
+
 public class HomePage {
-        private final By ACCEPT_BTN = By.xpath(".//div[contains(@class, 'button cookie')]");
-        private final By ARTICLE_TITLE = By.xpath(".//span[@itemprop = 'headline name']");
-        private BaseFunc baseFunc;
+    private final By ACCEPT_BTN = By.xpath(".//button[@mode, 'primary']");
+    private final By ARTICLE_TITLE = By.xpath(".//span[@itemprop = 'headline name']");
+    private final By COMMENTS_COUNT = By.xpath(".//span[contains(@class, '__comment')])");
+    private final By CLOSE_ADS_BTN = By.xpath(".//div[contains(@style, 'z-index: 6100')]");
+    private BaseFunc baseFunc;
+    private final By ARTICLE = By.tagName("article");
 
-        public HomePage(BaseFunc baseFunc) {
-            this.baseFunc = baseFunc;
-        }
-        public void acceptCookies () {
-            baseFunc.click(ACCEPT_BTN);
-        }
+    private final Logger LOGGER = LogManager.getLogger(this.getClass());
 
-        public void openArticleById (int id) {
-            WebElement articleToClick = baseFunc.findElements(ARTICLE_TITLE).get(id);
-            baseFunc.click(articleToClick);
-        }
+    public HomePage(BaseFunc baseFunc) {
+        this.baseFunc = baseFunc;
 
+        if (baseFunc.isElementsPresents(CLOSE_ADS_BTN)) {
+            baseFunc.click(CLOSE_ADS_BTN);
+        }
+    }
+
+    public void acceptCookies() {
+        baseFunc.click(ACCEPT_BTN);
+    }
+
+    public ArticlePage openArticleById(int id) {
+        WebElement articleToClick = baseFunc.findElements(ARTICLE_TITLE).get(id);
+        baseFunc.click(articleToClick);
+        return new ArticlePage(baseFunc);
+    }
+
+    public String getArticleTitleById(int id) {
+        LOGGER.info("Getting article Nr. " + id + " title");
+        return baseFunc.getText(ARTICLE_TITLE, id);
+    }
+
+    public int getCommentCountById(int id) {
+        CommentsHelper helper = new CommentsHelper();
+        return helper.getCommentCount(baseFunc.findElement(COMMENTS_COUNT));
+    }
+
+    public List<WebElement> getTitles() {
+        return baseFunc.findElements(ARTICLE_TITLE);
+    }
+
+    public List<WebElement> getComments() {
+        return baseFunc.findElements(COMMENTS_COUNT);
+    }
+
+    public HashMap<String, Integer> getAllArticles() {
+        List<WebElement> articles = baseFunc.findElements(ARTICLE);
+
+        HashMap<String, Integer> allArticles = new HashMap<String, Integer>();
+
+        for (WebElement we : articles) {
+            if (we.findElement(ARTICLE_TITLE).getText().length() != 0) {
+
+                String title = we.findElement(ARTICLE_TITLE).getText();
+                Integer commentCount;
+
+                if (we.findElements(COMMENTS_COUNT).isEmpty()) {
+                    commentCount = 0;
+                } else {
+
+                    String commentsToParse = we.findElement(COMMENTS_COUNT).getText();
+                    commentCount = Integer.parseInt(commentsToParse.substring(1, commentsToParse.length() - 1));
+                }
+                allArticles.put(title, commentCount);
+            }
+        }
+        return allArticles;
+    }
 }
